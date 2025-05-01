@@ -1,0 +1,67 @@
+# -----------------------------------------
+# Unreal Engine Git Ignore 文件
+# -----------------------------------------
+
+# 忽略二进制文件和临时文件
+*.exe
+*.dll
+*.lib
+*.app
+*.dylib
+*.so
+*.apk
+*.xcodeproj
+*.xcworkspace
+
+# 忽略临时和构建目录
+Binaries/
+DerivedDataCache/
+Intermediate/
+Saved/
+Build/IOS/Build/
+Build/Android/obj/
+Build/Android/bin/
+
+# 忽略自动生成的项目文件（如 Visual Studio）
+.vscode/
+.idea/
+*.sln
+*.suo
+*.xcodeproj
+*.xcworkspace
+*.opensdf
+*.sdf
+*.VC.db
+*.VC.VC.opendb
+
+# 忽略系统生成的文件
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 忽略压缩包
+*.zip
+*.tar.gz
+*.7z
+
+# 忽略用户设置
+*.user
+*.userprefs
+*.userosscache
+*.userSettings
+*.log
+
+# 忽略构建生成的插件缓存
+.vs/
+
+# 忽略自动生成的配置
+Config/DefaultEditor.ini
+Config/DefaultEditorPerProjectUserSettings.ini
+
+# 可选：忽略构建后的内容（仅在你不希望将 Cooked 内容提交时）
+# Cooked/
+# Engine/Content/Editor/
+
+# 可选：如果你用的是 Perforce 但也想用 Git，忽略这些
+.p4ignore
+.p4config
