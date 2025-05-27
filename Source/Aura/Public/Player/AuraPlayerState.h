@@ -25,7 +25,8 @@ protected:
 	UPROPERTY()
 	TObjectPtr<UAttributeSet> AttributeSet;
 
-	// Í¨¹ý IAbilitySystemInterface ¼Ì³Ð
+public:
+	// Í¨ï¿½ï¿½ IAbilitySystemInterface ï¿½Ì³ï¿½
 	UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 	UAttributeSet* GetAttributeSet() const { return AttributeSet; }
 };
