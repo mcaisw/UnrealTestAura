@@ -20,7 +20,7 @@ class AURA_API AAuraPlayerState : public APlayerState,public IAbilitySystemInter
 	AAuraPlayerState();
 
 protected:
-	UPROPERTY()
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Attributes")
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
 	UPROPERTY()
 	TObjectPtr<UAttributeSet> AttributeSet;

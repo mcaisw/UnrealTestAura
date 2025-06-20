@@ -18,6 +18,9 @@ public:
 	AAuraEffectActor();
 	UPROPERTY(EditAnywhere,BlueprintReadOnly,Category="Applied Effects")
 	TSubclassOf<UGameplayEffect> InstantGamePlayEffectClass;
+
+	UPROPERTY(EditAnywhere,BlueprintReadOnly,Category="Applied Effects")
+	TSubclassOf<UGameplayEffect> DurationGamePlayEffectClass;
 	
 protected:
 	// Called when the game starts or when spawned
