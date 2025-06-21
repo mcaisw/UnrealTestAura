@@ -26,7 +26,20 @@ void AAuraEffectActor::ApplyEffectToTarget(AActor* TargetActor, TSubclassOf<UGam
 	FGameplayEffectContextHandle EffectContextHandle=TargetASC->MakeEffectContext();
 	EffectContextHandle.AddSourceObject(this);
 	FGameplayEffectSpecHandle EffectSpecHandle=TargetASC->MakeOutgoingSpec(GamePlayEffectClass,1.f,EffectContextHandle);
-	TargetASC->ApplyGameplayEffectSpecToSelf(*EffectSpecHandle.Data.Get());
+	FActiveGameplayEffectHandle ActiveGameplayEffectHandle=TargetASC->ApplyGameplayEffectSpecToSelf(*EffectSpecHandle.Data.Get());
+	const bool InfinitePolicy=EffectSpecHandle.Data.Get()->Def->DurationPolicy==EGameplayEffectDurationType::Infinite;
+	if (InfinitePolicy)
+	{
+		ActiveGameplayEffectMap.Add(ActiveGameplayEffectHandle,TargetASC);
+	}
+}
+
+void AAuraEffectActor::OnOverlap(AActor* TargetActor)
+{
+}
+
+void AAuraEffectActor::OnEndOverlap(AActor* TargetActor)
+{
 }
 
 // Called when the game starts or when spawned
