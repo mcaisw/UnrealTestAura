@@ -41,5 +41,15 @@ void UAuraAttributeSet::OnRep_MaxMana(const FGameplayAttributeData& OldMaxMana) 
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UAuraAttributeSet, MaxMana, OldMaxMana);
 }
 
+void UAuraAttributeSet::PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue)
+{
+	Super::PreAttributeChange(Attribute, NewValue); 
+	if (Attribute==GetHealthAttribute())
+	{
+		NewValue=FMath::Clamp(NewValue,0.f,GetMaxHealth());
+		UE_LOG(LogTemp,Warning,TEXT("Health::%f"),NewValue);
+	}
+}
+
 
 
