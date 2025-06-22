@@ -27,6 +27,7 @@ void AAuraEffectActor::ApplyEffectToTarget(AActor* TargetActor, TSubclassOf<UGam
 	EffectContextHandle.AddSourceObject(this);
 	FGameplayEffectSpecHandle EffectSpecHandle=TargetASC->MakeOutgoingSpec(GamePlayEffectClass,1.f,EffectContextHandle);
 	FActiveGameplayEffectHandle ActiveGameplayEffectHandle=TargetASC->ApplyGameplayEffectSpecToSelf(*EffectSpecHandle.Data.Get());
+	//检查当前的GameEffect是不是Infinite
 	const bool InfinitePolicy=EffectSpecHandle.Data.Get()->Def->DurationPolicy==EGameplayEffectDurationType::Infinite;
 	if (InfinitePolicy)
 	{
@@ -36,10 +37,55 @@ void AAuraEffectActor::ApplyEffectToTarget(AActor* TargetActor, TSubclassOf<UGam
 
 void AAuraEffectActor::OnOverlap(AActor* TargetActor)
 {
+	if (InstantEffectApplicationPolicy==EEffectApplicationPolicy::ApplyOnOverlap)
+	{
+		ApplyEffectToTarget(TargetActor,InstantGamePlayEffectClass);
+	}
+
+	if (DurationEffectApplicationPolicy==EEffectApplicationPolicy::ApplyOnOverlap)
+	{
+		ApplyEffectToTarget(TargetActor,DurationGamePlayEffectClass);
+	}
+
+	if (InfiniteEffectApplicationPolicy==EEffectApplicationPolicy::ApplyOnOverlap)
+	{
+		ApplyEffectToTarget(TargetActor,InfiniteGamePlayEffectClass);
+	}
 }
 
 void AAuraEffectActor::OnEndOverlap(AActor* TargetActor)
 {
+	if (InstantEffectApplicationPolicy==EEffectApplicationPolicy::ApplyOnEndOverlap)
+	{
+		ApplyEffectToTarget(TargetActor,InstantGamePlayEffectClass);
+	}
+	if (DurationEffectApplicationPolicy==EEffectApplicationPolicy::ApplyOnEndOverlap)
+	{
+		ApplyEffectToTarget(TargetActor,DurationGamePlayEffectClass);
+	}
+	
+	// if (InfiniteEffectApplicationPolicy==EEffectApplicationPolicy::ApplyOnEndOverlap)
+	// {
+	// 	ApplyEffectToTarget(TargetActor,InfiniteGamePlayEffectClass);
+	// }
+
+	if (InfiniteEffectRemovalPolicy==EEffectRemovalPolicy::RemoveOnEndOverlap)
+	{
+		UAbilitySystemComponent* TargetASC=UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(TargetActor);
+		if (!IsValid(TargetASC))
+		{
+			return;
+		}
+		
+		for (auto It = ActiveGameplayEffectMap.CreateIterator(); It; ++It)
+		{
+			if (It.Value()==TargetASC)
+			{
+				It.Value()->RemoveActiveGameplayEffect(It.Key());
+				It.RemoveCurrent();
+			}
+		}
+	}
 }
 
 // Called when the game starts or when spawned
