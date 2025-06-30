@@ -32,4 +32,7 @@ protected:
 	// 通过 IAbilitySystemInterface 继承
 	UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 	UAttributeSet* GetAttributeSet() const { return AttributeSet; }
+
+public:
+	virtual void InitAbilityActorInfo();
 };
