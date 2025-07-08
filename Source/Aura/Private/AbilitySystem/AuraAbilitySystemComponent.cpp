@@ -15,9 +15,7 @@ void UAuraAbilitySystemComponent::EffectApplied(UAbilitySystemComponent* Ability
 
 	FGameplayTagContainer OutContainer;
 	GameplayEffectSpec.GetAllAssetTags(OutContainer);
-	for (const FGameplayTag& T:OutContainer)
-	{
-		const auto msg=T.ToString();
-		GEngine->AddOnScreenDebugMessage(1,8.f,FColor::Blue,msg);
-	}
+	EffectAssetTags.Broadcast(OutContainer);
+	
+	
 }
