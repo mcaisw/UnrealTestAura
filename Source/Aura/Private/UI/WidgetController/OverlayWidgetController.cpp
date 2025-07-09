@@ -30,12 +30,13 @@ void UOverlayWidgetController::BindCallbacksToDependencies()
 	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AuraAttributeSet->GetMaxManaAttribute())
 	.AddUObject(this,&UOverlayWidgetController::MaxManaChanged);
 
-	Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent)->EffectAssetTags.AddLambda([](const FGameplayTagContainer& assetTags)
+	Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent)->EffectAssetTags.AddLambda([this](const FGameplayTagContainer& assetTags)
 	{
-		for (const FGameplayTag& T:assetTags)
+		for (const FGameplayTag& Tag:assetTags)
 		{
-			const auto msg=T.ToString();
+			const auto msg=Tag.ToString();
 			GEngine->AddOnScreenDebugMessage(1,8.f,FColor::Blue,msg);
+			FUIWidgetRow* uiWidgetRow=GetDataTableRowByTag<FUIWidgetRow>(MessageWidgetDataTable,Tag);
 		}
 	});
 }
