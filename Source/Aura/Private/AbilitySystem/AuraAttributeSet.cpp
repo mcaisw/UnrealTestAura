@@ -10,10 +10,8 @@
 
 UAuraAttributeSet::UAuraAttributeSet()
 {
-	InitHealth(50.f);
-	InitMana(5.f);
-	InitMaxHealth(100.f);
-	InitMaxMana(50.f);
+	InitHealth(10.f);
+	InitMana(10.f);
 }
 
 void UAuraAttributeSet::GetLifetimeReplicatedProps(TArray<class FLifetimeProperty>& OutLifetimeProps) const
@@ -105,7 +103,7 @@ void UAuraAttributeSet::SetEffectProperties(const FGameplayEffectModCallbackData
 	
 	if (IsValid(Props.SourceASC)
 		&&Props.SourceASC->AbilityActorInfo.IsValid()
-		&&IsValid(Props.SourceASC->AbilityActorInfo->AvatarActor.Get()))
+		&&IsValid(Props.SourceASC->AbilityActorInfo->AvatarActor.Get())) 
 	{
 		Props.SourceAvatarActor=Props.SourceASC->AbilityActorInfo->AvatarActor.Get();
 		Props.SourceController=Props.SourceASC->AbilityActorInfo->PlayerController.Get();

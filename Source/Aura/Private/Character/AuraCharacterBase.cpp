@@ -26,19 +26,19 @@ UAbilitySystemComponent* AAuraCharacterBase::GetAbilitySystemComponent() const
 	return AbilitySystemComponent;
 }
 
-void AAuraCharacterBase::InitializePrimaryAttributes() const
+void AAuraCharacterBase::InitializeDefaultAttributes() const
+{
+	ApplyEffectToSelf(DefaultPrimaryAttributes,1);
+	ApplyEffectToSelf(DefaultSecondaryAttributes,1);
+}
+
+void AAuraCharacterBase::ApplyEffectToSelf(TSubclassOf<UGameplayEffect> Effect, int level) const
 {
 	check(IsValid(AbilitySystemComponent));
-	check(IsValid(DefaultPrimaryAttributes));
-	// 获取角色的能力系统组件（AbilitySystemComponent）
-	// 检查能力系统组件和默认主属性（DefaultPrimaryAttributes）是否都有效
-	// 创建一个 GameplayEffectContextHandle，用于描述效果的上下文（如来源对象等）
+	check(IsValid(Effect));
 	FGameplayEffectContextHandle EffectContextHandle = AbilitySystemComponent->MakeEffectContext();
-	// 基于默认主属性和上下文，生成一个 GameplayEffectSpecHandle，1 表示效果等级
-	FGameplayEffectSpecHandle EffectSpecHandle = AbilitySystemComponent->MakeOutgoingSpec(DefaultPrimaryAttributes, 1, EffectContextHandle);
-	// 获取实际的 GameplayEffectSpec 指针
+	FGameplayEffectSpecHandle EffectSpecHandle = AbilitySystemComponent->MakeOutgoingSpec(Effect, level, EffectContextHandle);
 	FGameplayEffectSpec* EffectSpec = EffectSpecHandle.Data.Get();
-	// 将该效果应用到自己身上，实现主属性的初始化
 	AbilitySystemComponent->ApplyGameplayEffectSpecToTarget(*EffectSpec,AbilitySystemComponent);
 }
 
