@@ -37,3 +37,8 @@ AAuraEnemy::AAuraEnemy()
 	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Minimal);
 	AttributeSet = CreateDefaultSubobject<UAuraAttributeSet>("AttributeSet");
 }
+
+int32 AAuraEnemy::GetPlayerLevel()const
+{
+	return Level;
+}
