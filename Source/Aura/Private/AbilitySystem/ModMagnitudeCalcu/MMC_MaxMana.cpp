@@ -39,6 +39,7 @@ float UMMC_MaxMana::CalculateBaseMagnitude_Implementation(const FGameplayEffectS
 	}
 
 	// Log the result for debugging
+	
 	UE_LOG(LogTemp, Log, TEXT("MaxMana: %.2f"), result);
 	return result;
 }
