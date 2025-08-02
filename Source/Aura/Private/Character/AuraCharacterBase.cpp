@@ -34,11 +34,21 @@ void AAuraCharacterBase::InitializeDefaultAttributes() const
 
 void AAuraCharacterBase::ApplyEffectToSelf(TSubclassOf<UGameplayEffect> Effect, int level) const
 {
+	// 验证能力系统组件和效果类是否有效
 	check(IsValid(AbilitySystemComponent));
 	check(IsValid(Effect));
+	
+	// 1. 创建效果上下文（记录效果来源信息）
 	FGameplayEffectContextHandle EffectContextHandle = AbilitySystemComponent->MakeEffectContext();
+	// 设置效果来源为当前角色
+	EffectContextHandle.AddSourceObject(this); 
+	
+	// 2. 根据效果类、等级和上下文创建具体的效果规格
 	FGameplayEffectSpecHandle EffectSpecHandle = AbilitySystemComponent->MakeOutgoingSpec(Effect, level, EffectContextHandle);
+	// 获取效果规格的原始指针
 	FGameplayEffectSpec* EffectSpec = EffectSpecHandle.Data.Get();
+	
+	// 3. 将配置好的效果应用到自己身上
 	AbilitySystemComponent->ApplyGameplayEffectSpecToTarget(*EffectSpec,AbilitySystemComponent);
 }
 
